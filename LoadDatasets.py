@@ -1,6 +1,7 @@
 import os
 import cv2
 import numpy as np
+import argparse
 
 np.set_printoptions(threshold=np.inf)
 
@@ -47,18 +48,20 @@ def dataset_to_trainset(in_path, train_images_path, train_labels_path):
             label = cv2.imread(file_path)
             label = label / np.max(label[:, :, 2]) * 255  # 提高亮度
             label[:, :, 0] = label[:, :, 1] = label[:, :, 2]  #
-            print(np.max(label[:, :, 2]))
-            print(set(label.ravel()))  # set()创建一个无序不重复元素集 .ravel()拉成一维数组 修改会影响到原本数组 flatten() 修改不会影响到原本数组
+            # print(np.max(label[:, :, 2]))
+            # print(set(label.ravel()))  # set()创建一个无序不重复元素集 .ravel()拉成一维数组 修改会影响到原本数组 flatten() 修改不会影响到原本数组
             cv2.imwrite(train_labels_path + f'{os.path.split(root)[-1]}.png', label)
 
 
 if __name__ == "__main__":
-    # 数据转换
-    in_path = 'labelme/json'
-    out_path = 'labelme/data'
-    # labelme_json_to_dataset(in_path, out_path)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--in_path', type=str, default='labelme/json', help='json path')
+    parser.add_argument('--out_path', type=str, default='labelme/data', help='out data path')
+    parser.add_argument('--train_images_path', type=str, default='labelme/train_images/', help='out train images path')
+    parser.add_argument('--train_labels_path', type=str, default='labelme/train_labels/', help='out train_labels path')
+    opt = parser.parse_args()
 
+    # 数据转换
+    labelme_json_to_dataset(opt.in_path, opt.out_path)
     # 提取image和label
-    train_images_path_path = 'labelme/train_images/'
-    train_labels_path_path = 'labelme/train_labels/'
-    dataset_to_trainset(out_path, train_images_path_path, train_labels_path_path)
+    dataset_to_trainset(opt.out_path, opt.train_images_path, opt.train_labels_path)
