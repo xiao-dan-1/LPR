@@ -4,7 +4,7 @@ import tensorflow as tf
 from tensorflow.keras import layers, models
 from tensorflow.python.client.session import InteractiveSession
 
-from datasets.labelme.Json2datasets import *
+from utils.Json2datasets import *
 
 config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
