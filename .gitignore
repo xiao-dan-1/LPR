@@ -5,9 +5,6 @@
 !*/
 # 忽略一些指定的目录名
 datasets/
-labelme/data/
-labelme/train_images/
-labelme/train_labels/
 # 不忽略下面指定的文件类型
 !*.cpp
 !*.h
@@ -20,3 +17,5 @@ labelme/train_labels/
 !*.png
 !*.yaml
 !*.md
+!*.json
+!requirements.txt
