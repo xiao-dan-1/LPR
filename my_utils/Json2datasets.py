@@ -1,11 +1,9 @@
-# ending = utf-8
+
 import os
 import cv2
 import numpy as np
 import argparse
 
-
-# np.set_printoptions(threshold=np.inf)
 
 def cv_show(name, image):
     cv2.imshow(name, image)

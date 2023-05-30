@@ -1,10 +1,12 @@
 # -*- coding:utf-8 -*-
 # author: DuanshengLiu
+import os.path
+
+import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras import layers, models
 from tensorflow.python.client.session import InteractiveSession
-
-from utils.Json2datasets import *
+from my_utils.Json2datasets import *
 
 config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -19,36 +21,25 @@ def _Loadimgs(filepath):
     files_path = get_files_path(filepath)
     for file_path in files_path:
         img = cv2.imread(file_path)
-        img = cv2.resize(img, (height, width), interpolation=cv2.INTER_CUBIC)
+        if img.shape != (height, width, 3):
+            img = cv2.resize(img, dsize=(height, width), interpolation=cv2.INTER_AREA)[:, :, :3]
         print(img.shape)
         imgs.append(img)
     return imgs
 
 
 def LoadDataset(filepath):
-    imgs_path = os.path.join(filepath, 'train_images')
-    labels_path = os.path.join(filepath, 'train_images')
+    imgs_path = os.path.join(filepath, 'images')
+    labels_path = os.path.join(filepath, 'labels')
     img = np.array(_Loadimgs(imgs_path))
     label = np.array(_Loadimgs(labels_path))
     return img, label
 
 
-def unet_train():
-    path = 'datasets/labelme/'
-    input_name = os.listdir(path + 'train_images')
-    n = len(input_name)
-    print(n)
-    # X_train, y_train = [], []
-    # for i in range(n):
-    #     print("正在读取第%d张图片" % i)
-    #     img = cv2.imread(path + 'train_images/%d.png' % i)
-    #     label = cv2.imread(path + 'train_label/%d.png' % i)
-    #     X_train.append(img)
-    #     y_train.append(label)
-    # X_train = np.array(X_train)
-    # y_train = np.array(y_train)
-    X_train, y_train = LoadDataset(path)
+def unet_train(save_path):
+    path = './datasets/label-studio/'
 
+    X_train, y_train = LoadDataset(path)
     X_train = X_train.astype('float64')
     y_train = y_train.astype('float64')
 
@@ -65,6 +56,7 @@ def unet_train():
         return x
 
     inpt = layers.Input(shape=(height, width, 3))
+
     conv1 = Conv2d_BN(inpt, 8, (3, 3))
     conv1 = Conv2d_BN(conv1, 8, (3, 3))
     pool1 = layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='same')(conv1)
@@ -112,16 +104,19 @@ def unet_train():
     conv9 = layers.Dropout(0.5)(conv9)
     outpt = layers.Conv2D(filters=3, kernel_size=(1, 1), strides=(1, 1), padding='same', activation='relu')(conv9)
 
-    model = models.Model(inpt, outpt)
-    model.compile(optimizer='adam',
-                  loss='mean_squared_error',
-                  metrics=['accuracy'])
+    if os.path.exists(os.path.join(save_path, 'unet.h5')):
+        model = models.load_model(os.path.join(save_path, 'unet.h5'))
+    else:
+        model = models.Model(inpt, outpt)
+        model.compile(optimizer='adam',
+                      loss='mean_squared_error',
+                      metrics=['accuracy'])
     model.summary()
 
     print("开始训练u-net")
-    model.fit(X_train, y_train, epochs=100, batch_size=8)  # epochs和batch_size看个人情况调整，batch_size不要过大，否则内存容易溢出
+    model.fit(X_train, y_train, epochs=20, batch_size=8)  # epochs和batch_size看个人情况调整，batch_size不要过大，否则内存容易溢出
     # 我11G显存也只能设置15-20左右，我训练最终loss降低至250左右，acc约95%左右
-    model.save('unet.h5')
+    model.save(os.path.join(save_path, 'unet.h5'))
     print('unet.h5保存成功!!!')
 
 
@@ -143,4 +138,16 @@ def unet_predict(unet, img_src_path):
     return img_src, img_mask
 
 
-unet_train()
+if __name__ == "__main__":
+    save_path = "checkpoints"
+    # unet_train(save_path)
+    unnet = models.load_model(os.path.join(save_path, 'unet.h5'))
+    unnet.summary()
+    files_path = get_files_path("datasets/label-studio/images")
+    out_path = "result"
+    if not os.path.exists(out_path):
+        os.makedirs(out_path)
+    for i, file_path in enumerate(files_path):
+        img_src, img_mask = unet_predict(unnet, file_path)
+        cv2.imwrite(f"{out_path}/{i}.jpg",
+                    np.concatenate((img_src, img_mask, cv2.bitwise_and(img_src, img_mask)), axis=1))

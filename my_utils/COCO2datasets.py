@@ -22,7 +22,7 @@ def coco_to_Mask(coco, out_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_path", type=str,
-                        default="../datasets/label-studio/project-1-at-2023-05-30-17-01-7ce41586",
+                        default="../datasets/label-studio/",
                         help="data path")
     opt = parser.parse_args()
 
