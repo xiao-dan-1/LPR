@@ -1,1 +1,1 @@
-# .gitignore# 忽略一些指定的目录名datasets/result/# 不忽略下面指定的文件类型
+# .gitignore# 忽略一些指定的目录名datasets/result/checkpoints/.idea/# 不忽略下面指定的文件类型
