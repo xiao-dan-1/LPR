@@ -49,7 +49,7 @@ def LoadDataset_From_CCPD(filepath):
             files_path.append(line.replace('\n', ''))
     imgs = []
     labels = []
-    for file_path in Progressbar(files_path[0:1000]):
+    for file_path in Progressbar(files_path[0:500]):
         file_name = os.path.split(file_path)[-1]
         imgs_path = os.path.join(ccpd_path, file_path)
         labels_path = os.path.join(ccpd_path, 'mask', file_name)

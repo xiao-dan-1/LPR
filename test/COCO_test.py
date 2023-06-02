@@ -11,7 +11,7 @@ COCO结构：
     "annotations"   : [{"id": 0,"image_id": 0,"category_id": 0,"segmentation": [],"bbox": []},{}],
     "info"          : {}
 '''
-dataset_path = '../datasets/label-studio/project-1-at-2023-05-30-17-01-7ce41586'
+dataset_path = '../datasets/label-studio'
 # 构建coco对象
 coco = COCO(os.path.join(dataset_path, "result.json"))  # 导入数据集
 # info
@@ -57,8 +57,8 @@ img_id = coco.getImgIds()
 imgs = coco.loadImgs(img_id)
 
 for img in imgs:
-    img_path = os.path.join(dataset_path, img._get('file_name'))
-    img_id = img._get('id')
+    img_path = os.path.join(dataset_path, img.get('file_name'))
+    img_id = img.get('id')
     img = plt.imread(img_path)
     plt.imshow(img)
     ann = coco.loadAnns(coco.getAnnIds(imgIds=img_id))
@@ -74,8 +74,8 @@ anns = coco.loadAnns(ann_ids)
 print(anns)
 
 for ann in anns:
-    image_id = ann._get("image_id")
-    file_name = coco.loadImgs(image_id)[0]._get("file_name")
+    image_id = ann.get("image_id")
+    file_name = coco.loadImgs(image_id)[0].get("file_name")
     mask = coco.annToMask(ann)
     img = plt.imread(os.path.join(dataset_path, file_name))
     img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)

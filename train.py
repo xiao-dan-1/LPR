@@ -4,8 +4,19 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from models.UNet import UNet
 from utils.LoadDataset import LoadDataset_From_CCPD
-# from utils.Progressbar import Progressbar
 from sklearn.model_selection import train_test_split
+
+gpus = tf.config.list_physical_devices('GPU')
+if gpus:
+    try:
+        # Currently, memory growth needs to be the same across GPUs
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+        logical_gpus = tf.config.list_logical_devices('GPU')
+        print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+    except RuntimeError as e:
+        # Memory growth must be set before GPUs have been initialized
+        print(e)
 
 
 def show_history(history):
@@ -41,11 +52,11 @@ def train(save_path):
     # 1. 加载数据集
     # dataset_path = 'datasets/label-studio/'
     ccpd_path = "D:\Desktop\license plate recognition\CCPD\CCPD2019"
+    with tf.device('/CPU:0'):
+        dataset_path = os.path.join(ccpd_path, r"splits\train.txt")
+        data_images, data_labels = LoadDataset_From_CCPD(dataset_path)
 
-    dataset_path = os.path.join(ccpd_path, r"splits\train.txt")
-    data_images, data_labels = LoadDataset_From_CCPD(dataset_path)
-
-    train_images, test_images, train_labels, test_labels = train_test_split(data_images, data_labels, test_size=0.3)
+        train_images, test_images, train_labels, test_labels = train_test_split(data_images, data_labels, test_size=0.3)
     # 2. 加载模型
     batch_size = 8
     # 断点续训
@@ -62,31 +73,39 @@ def train(save_path):
     # 实例化模型
     model = UNet()
 
-    model.save_weights(checkpoint_path.format(epoch=0))
-
-    # Loads the weights
-    if latest:
-        print("load_weights latest")
-        model.load_weights(latest)
+    # model.save_weights(checkpoint_path.format(epoch=0))
+    # # Loads the weights
+    # if latest:
+    #     print("load_weights latest")
+    #     model.load_weights(latest)
 
     # 3.配置训练方法 model.compile  ，优化器，损失函数，评测指标
     # optimizer = tf.keras.optimizers.Adam(learning_rate=0.002)
     # binary_crossentropy categorical_crossentropy
     # tf.keras.losses
-    model.compile(optimizer='adam', loss="mean_squared_error", metrics=['accuracy'])
+    model.compile(optimizer="adam", loss="mean_squared_error", metrics=["accuracy"])
     # 绘制最终的模型框架
     tf.keras.utils.plot_model(model, to_file='images/graph.png', show_shapes=True)
 
     # 4. 训练模型
     print("开始训练")
-    history = model.fit(train_images, train_labels, epochs=5, batch_size=batch_size,
-                        validation_data=(test_images, test_labels),
+
+    # def data_generator(images, labels, batch):
+    #     over = len(images) % batch
+    #     while True:
+    #         for i in range(0, len(images) - over, batch):
+    #             train_data = images[i:i + batch]
+    #             train_label = labels[i:i + batch]
+    #             yield train_data, train_label
+
+    history = model.fit(train_images, train_labels, epochs=120, batch_size=batch_size,
+                        validation_data=(test_images, test_images),
                         validation_freq=1,
                         callbacks=[cp_callback])  # epochs和batch_size看个人情况调整，batch_size不要过大，否则内存容易溢出
 
     # 5. 保存模型
     model.save(save_path)
-    print('unet.h5保存成功!!!')
+    print(f'{save_path}保存成功!!!')
 
     # 6. 显示
     show_history(history)

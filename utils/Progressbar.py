@@ -11,6 +11,7 @@ def Progressbar(contents, str="progress"):
         print("\r", end="")
         print(f"{str}: {str1}{str2}[{percentage}%][{index + 1} /{length}]", end="")
         yield content
+    print("")
 
 
 if __name__ == '__main__':

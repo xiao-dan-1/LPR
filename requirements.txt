@@ -3,3 +3,4 @@ numpy==1.24.3
 matplotlib==3.7.1
 pycocotools==2.0.6
 tensorflow-gpu==2.10.0
+scikit-learn==1.2.2
