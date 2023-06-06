@@ -2,6 +2,7 @@ strs = ['━', '█']
 
 
 def Progressbar(contents, str="progress"):
+    contents = list(contents)  # 加入list()可以处理zip对象
     length = len(contents)
     epoch = length - 1
     for index, content in enumerate(contents):

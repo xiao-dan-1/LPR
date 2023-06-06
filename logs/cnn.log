@@ -1,0 +1,60 @@
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to
+==================================================================================================
+ input_1 (InputLayer)           [(None, 70, 220, 3)  0           []
+                                ]
+
+ conv2d (Conv2D)                (None, 70, 220, 16)  448         ['input_1[0][0]']
+
+ max_pooling2d (MaxPooling2D)   (None, 35, 110, 16)  0           ['conv2d[0][0]']
+
+ dropout (Dropout)              (None, 35, 110, 16)  0           ['max_pooling2d[0][0]']
+
+ conv2d_1 (Conv2D)              (None, 33, 108, 32)  4640        ['dropout[0][0]']
+
+ conv2d_2 (Conv2D)              (None, 31, 106, 32)  9248        ['conv2d_1[0][0]']
+
+ max_pooling2d_1 (MaxPooling2D)  (None, 16, 53, 32)  0           ['conv2d_2[0][0]']
+
+ dropout_1 (Dropout)            (None, 16, 53, 32)   0           ['max_pooling2d_1[0][0]']
+
+ conv2d_3 (Conv2D)              (None, 14, 51, 64)   18496       ['dropout_1[0][0]']
+
+ conv2d_4 (Conv2D)              (None, 12, 49, 64)   36928       ['conv2d_3[0][0]']
+
+ max_pooling2d_2 (MaxPooling2D)  (None, 6, 25, 64)   0           ['conv2d_4[0][0]']
+
+ dropout_2 (Dropout)            (None, 6, 25, 64)    0           ['max_pooling2d_2[0][0]']
+
+ conv2d_5 (Conv2D)              (None, 4, 23, 128)   73856       ['dropout_2[0][0]']
+
+ conv2d_6 (Conv2D)              (None, 2, 21, 128)   147584      ['conv2d_5[0][0]']
+
+ max_pooling2d_3 (MaxPooling2D)  (None, 1, 11, 128)  0           ['conv2d_6[0][0]']
+
+ dropout_3 (Dropout)            (None, 1, 11, 128)   0           ['max_pooling2d_3[0][0]']
+
+ flatten (Flatten)              (None, 1408)         0           ['dropout_3[0][0]']
+
+ dense (Dense)                  (None, 65)           91585       ['flatten[0][0]']
+
+ dense_1 (Dense)                (None, 65)           91585       ['flatten[0][0]']
+
+ dense_2 (Dense)                (None, 65)           91585       ['flatten[0][0]']
+
+ dense_3 (Dense)                (None, 65)           91585       ['flatten[0][0]']
+
+ dense_4 (Dense)                (None, 65)           91585       ['flatten[0][0]']
+
+ dense_5 (Dense)                (None, 65)           91585       ['flatten[0][0]']
+
+ dense_6 (Dense)                (None, 65)           91585       ['flatten[0][0]']
+
+==================================================================================================
+Total params: 932,295
+Trainable params: 932,295
+Non-trainable params: 0
+__________________________________________________________________________________________________
+
+进程已结束,退出代码0

@@ -1,63 +1,53 @@
-import cv2
-from utils.LP_Correction import *
-import time
+import numpy as np
+import tensorflow as tf
+from models.CNN_class import CNN
+from utils.LoadDataset import LoadDataset_for_CNN
 
 
-def CannyThreshold(lowThreshold, maxThreshold):
-    kernel_size = 3
-    edges = cv2.Canny(img_mask,
-                      lowThreshold,
-                      maxThreshold,
-                      apertureSize=kernel_size)
-    # dst = cv2.bitwise_and(img, img, mask=detected_edges)  # just add some colours to edges from original image.
-    cv2.imshow('TrackBars', edges)
+def train_cnn_demo():
+    # 读取数据集
+    path = r"D:\Desktop\license plate recognition\CCPD\CCPD2019\lp"
+    data_images, data_labels = LoadDataset_for_CNN(path)
+    data_labels = [data_labels[:, i] for i in range(7)]
+    print(f"data_labels:{data_labels}")
+    # 创建实例
+    model = CNN()
+    # 配置模型
+    "model.compile # 配置训练方法 ，优化器，损失函数，评测指标"
+    model.compile(optimizer='adam',
+                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
+                  metrics=['accuracy'])
+
+    model.summary()
+
+    # 模型训练
+    print("开始训练cnn")
+    model.fit(data_images, data_labels, epochs=500, batch_size=32)  # 总loss为7个loss的和
+    model.save('my_cnn.h5')
+    print('my_cnn.h5保存成功!!!')
 
 
-def Threshold_analyzer(x):
-    # 获取滑动条参数
-    lowThreshold = cv2.getTrackbarPos("lowThreshold", "TrackBars")
-    maxThreshold = cv2.getTrackbarPos("maxThreshold", "TrackBars")
-    # ksize = cv2.getTrackbarPos("ksize", "TrackBars")
-    # print(lowThreshold, maxThreshold)
-    #
-    # GaussianBlurThreshold(ksize)
-    CannyThreshold(lowThreshold, maxThreshold)
+def train_cnn_class_demo():
+    # 读取数据集
+    path = r"D:\Desktop\license plate recognition\CCPD\CCPD2019\lp"
+    data_images, data_labels = LoadDataset_for_CNN(path)
+    data_labels = [data_labels[:, i] for i in range(7)]
+    print(f"data_labels:{data_labels}")
+
+    # 创建实例
+    model = CNN()
+    # 配置模型
+    "model.compile # 配置训练方法 ，优化器，损失函数，评测指标"
+    model.compile(optimizer='adam',
+                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
+                  metrics=['accuracy'])
+    # 模型训练
+    print("开始训练cnn")
+    model.fit(data_images.astype(np.float32), data_labels, epochs=100, batch_size=32)  # 总loss为7个loss的和
+    model.save("saved_models/cnn_class_model")
+    print('cnn_class保存成功!!!')
+    model.summary()
 
 
-def create_Threshold_analyzer():
-    # 创建窗口
-    cv2.namedWindow('TrackBars')
-    cv2.createTrackbar('lowThreshold', 'TrackBars', 0, 500, Threshold_analyzer)
-    cv2.createTrackbar('maxThreshold', 'TrackBars', 0, 800, Threshold_analyzer)
-    # 设置默认值
-    cv2.setTrackbarPos('lowThreshold', 'TrackBars', 0)
-    cv2.setTrackbarPos('maxThreshold', 'TrackBars', 0)
-
-    cv2.waitKey(0)
-
-
-# deom
 if __name__ == '__main__':
-    img_mask = cv2.imread('mask.jpg')
-    # cv_show(img_mask)
-    time_start = time.clock()  # 记录开始时间
-    # create_Threshold_analyzer()
-
-    points = get_points_from_mask(img_mask)
-    # print(LT, type(LT))
-
-    for c in points:
-        print(c)
-        cv2.circle(img_mask, c, radius=2, color=(0, 0, 255), thickness=-1)
-
-    cv_show(img_mask)
-
-    dst = License_plate_correction(img_mask, points)
-    print(dst.shape, dst.dtype)
-    cv2.imshow('dst', dst)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-    time_end = time.clock()  # 记录结束时间
-    time_sum = time_end - time_start  # 计算的时间差为程序的执行时间，单位为秒/s
-    print("time_sum:", time_sum)
+    train_cnn_demo()

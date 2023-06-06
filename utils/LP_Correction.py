@@ -4,8 +4,7 @@ import re
 
 import cv2
 import numpy as np
-from utils.CCPD import CCPD
-from utils.Json2datasets import get_files_path
+# from utils.CCPD import CCPD
 
 
 def cv_show(img):
@@ -16,8 +15,9 @@ def cv_show(img):
 
 # 线性规划
 def linear_program(contours, func):
+    print(contours)
     contours = contours[0].reshape(-1, 2)
-    # print(contours.shape)  # (46,1,2)
+    print(contours.shape)  # (46,1,2)
     max_point = contours[0]
     min_point = contours[0]
     for contour in contours:
@@ -52,28 +52,29 @@ def License_plate_correction(img, points, out_size=(220, 70)):
 
 
 if __name__ == '__main__':
-    # path = "D:/Desktop/license plate recognition/CCPD/CCPD2019/ccpd_base/"
-    # files_path = get_files_path(path)
-    ccpd_path = "D:\Desktop\license plate recognition\CCPD\CCPD2019"
-
-    train_path = os.path.join(ccpd_path, r"splits\train.txt")
-    files_path = []
-    with open(train_path, 'r') as f:
-        for line in f.readlines():
-            files_path.append(line.replace('\n', ''))
-    print(files_path, len(files_path))
-    for file_path in files_path[50:60]:
-        ccpd = CCPD(os.path.join(ccpd_path, file_path))
-        img = cv2.imread(ccpd.path)
-        points = [ccpd.LT, ccpd.RT, ccpd.LB, ccpd.RB]
-
-        dst = License_plate_correction(img, points)
-
-        print(dst.shape, dst.dtype)
-        cv2.imshow('img', img)
-        cv2.imshow('dst', dst)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+    pass
+    # # path = "D:/Desktop/license plate recognition/CCPD/CCPD2019/ccpd_base/"
+    # # files_path = get_files_path(path)
+    # ccpd_path = "D:\Desktop\license plate recognition\CCPD\CCPD2019"
+    #
+    # train_path = os.path.join(ccpd_path, r"splits\train.txt")
+    # files_path = []
+    # with open(train_path, 'r') as f:
+    #     for line in f.readlines():
+    #         files_path.append(line.replace('\n', ''))
+    # print(files_path, len(files_path))
+    # for file_path in files_path[50:60]:
+    #     ccpd = CCPD(os.path.join(ccpd_path, file_path))
+    #     img = cv2.imread(ccpd.path)
+    #     points = [ccpd.LT, ccpd.RT, ccpd.LB, ccpd.RB]
+    #
+    #     dst = License_plate_correction(img, points)
+    #
+    #     print(dst.shape, dst.dtype)
+    #     cv2.imshow('img', img)
+    #     cv2.imshow('dst', dst)
+    #     cv2.waitKey(0)
+    #     cv2.destroyAllWindows()
 
     # file_path = r'D:\Desktop\license plate recognition\CCPD\CCPD2019\ccpd_base\02-90_89-186&505_490&594-504&594_189&598_179' \
     #        r'&502_494&498-0_0_23_28_30_27_27-146-76.jpg'

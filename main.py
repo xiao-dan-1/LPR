@@ -54,7 +54,7 @@ def CannyThreshold(lowThreshold, maxThreshold):
                       lowThreshold,
                       maxThreshold,
                       apertureSize=kernel_size)
-    # dst = cv2.bitwise_and(img, img, mask=detected_edges)  # just add some colours to edges from original image.
+    # dst = cv2.bitwise_and(img, img, Mask=detected_edges)  # just add some colours to edges from original image.
     cv2.imshow('TrackBars', edges)
 
 

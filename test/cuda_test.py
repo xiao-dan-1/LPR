@@ -1,4 +1,14 @@
+import os
 import tensorflow as tf
+
+"""
+TF_CPP_MIN_LOG_LEVEL        base_loging	    屏蔽信息	                    输出信息
+        “0”	                INFO	        无	                        INFO + WARNING + ERROR + FATAL
+        “1”	                WARNING	        INFO	                    WARNING + ERROR + FATAL
+        “2”	                ERROR	        INFO + WARNING	            ERROR + FATAL
+        “3”	                FATAL	        INFO + WARNING + ERROR	    FATAL
+"""
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
 tf.debugging.set_log_device_placement(True)
 
