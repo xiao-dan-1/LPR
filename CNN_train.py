@@ -1,12 +1,10 @@
 import datetime
-import os
-import numpy as np
 import tensorflow as tf
-from matplotlib import pyplot as plt
-from sklearn.model_selection import train_test_split
-
 from models.CNN import CNN
-from utils.LoadDataset import LoadDataset_for_CNN
+# from datasets.lp.LoadDatasets import *
+# from datasets.CBLPRD.LoadDatasets import *
+from datasets.CCPD.LoadDatasets import *
+import albumentations as A
 
 """
 TF_CPP_MIN_LOG_LEVEL        base_loging	    屏蔽信息	                    输出信息
@@ -42,12 +40,12 @@ def show_history(history):
     val_acc = history.history['val_dense_accuracy']
     loss = history.history['dense_loss']
     val_loss = history.history['val_dense_loss']
-    plt.subplot(2, 1, 1)
+    plt.subplot(1, 2, 1)
     plt.plot(acc, label='Training Accuracy')
     plt.plot(val_acc, label='Validation Accuracy')
     plt.title('raining and validation Accuracy')
     plt.legend()
-    plt.subplot(2, 1, 2)
+    plt.subplot(1, 2, 2)
     plt.plot(loss, label='Training Loss')
     plt.plot(val_loss, label='Validation Loss')
     plt.title('raining and validation Loss')
@@ -56,21 +54,88 @@ def show_history(history):
 
 
 def train(save_path):
-    epochs = 150
+    epochs = 100
     batch_size = 32
+    num = None
+    image_size = (48, 128)
 
     dirname = os.path.dirname(save_path)
     if not os.path.exists(dirname):
         print(f"create {dirname} dir")
         os.makedirs(dirname)
     # 加载数据集
-    path = r"D:\Desktop\license plate recognition\CCPD\CCPD2019\lp"
-    data_images, data_labels = LoadDataset_for_CNN(path, 10000)
-    train_images, test_images, train_labels, test_labels = train_test_split(data_images, data_labels, test_size=0.3)
+    # path = r"D:\Desktop\license plate recognition\CCPD\CCPD2019\lp"
+    # data_images, data_labels = LoadDataset_for_CNN(path, num)
+    # train_images, test_images, train_labels, test_labels = train_test_split(data_images, data_labels, test_size=0.3)
+
+    # datasets_path = "datasets/lp"
+    # # datasets_path = "datasets/CBLPRD"
+    # train_images, test_images, train_labels, test_labels = LoadData(datasets_path, num=40000)
+    # datasets_path = "../CCPD/new_lps"
+    datasets_path = "datasets/CCPD/good_lps"
+    train_images, test_images, train_labels, test_labels = LoadData(datasets_path,num=num)
+    print("train_images:", train_images.shape, train_images.dtype)
+    print("train_labels:", train_labels.shape, train_labels.dtype)
+    print("test_images:", test_images.shape, test_images.dtype)
+    print("test_labels:", test_labels.shape, test_labels.dtype)
 
     train_labels = [train_labels[:, i] for i in range(7)]
     test_labels = [test_labels[:, i] for i in range(7)]
-    print(f"data_labels:{data_labels}")
+
+    # 创建数据增强的变换组合
+
+    transform = A.Compose([
+        # A.Rotate(limit=5, p=0.5),  # 限制较小的旋转角度
+        # A.RandomScale(scale_limit=0.1),  # 限制较小的缩放范围
+        A.ShiftScaleRotate(shift_limit=0, scale_limit=0, rotate_limit=5,interpolation=0,border_mode=cv2.BORDER_CONSTANT, p=0.6),
+        A.RandomBrightnessContrast(brightness_limit=0.1, contrast_limit=0.1),  # 限制较小的亮度和对比度调整范围
+        # A.GaussianBlur(blur_limit=3,p=0.5),  # 增加模糊程度，可自定义模糊核大小
+        # A.MedianBlur(blur_limit=3, p=0.2),
+        # A.ElasticTransform(p=0.5, alpha=15, sigma=120 * 0.05, alpha_affine=15 * 0.03),
+        # A.GridDistortion(p=0.8),
+
+        A.RGBShift(r_shift_limit=10, g_shift_limit=10, b_shift_limit=10),  # 限制较小的颜色偏移
+        A.HueSaturationValue(hue_shift_limit=10, sat_shift_limit=10, val_shift_limit=10),  # 限制较小的色相、饱和度和明度调整范围
+        A.Resize(image_size[0], image_size[1]),
+        # 添加其他所需的增强变换
+    ])
+
+    # 对图像进行数据增强
+    augmented_train_images = []
+    for train_image in train_images:
+        augmented = transform(image=train_image)
+        image = augmented["image"]
+        augmented_train_images.append(image)
+
+    augmented_train_images = np.array(augmented_train_images)
+    train_images = augmented_train_images
+    print("augmented_train_images:", augmented_train_images.shape, augmented_train_images.dtype)
+
+    def show_augmented_result_demo(X_train, X_train_augmented):
+        def visualize_segmentation(image, segmented_image):
+            # 可视化分割结果
+            fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+
+            axes[0].imshow(image[:, :, [2, 1, 0]])
+            axes[0].set_title('Original Image')
+
+            axes[1].imshow(segmented_image[:, :, [2, 1, 0]])
+            axes[1].set_title('Segmented Image')
+
+            plt.show()
+
+        # 选择样本进行测试
+        index = 10
+        sample_images = X_train[0:index]
+        sample_images_augs = X_train_augmented[0:index]
+
+        # 应用标签掩码来分割图像
+        for sample_image, sample_images_aug in zip(sample_images, sample_images_augs):
+            # 可视化分割结果
+            visualize_segmentation(sample_image, sample_images_aug)
+
+    show_augmented_result_demo(train_images, augmented_train_images)
+    #
     # 创建实例
     model = CNN()
     # 配置模型
@@ -109,5 +174,5 @@ def predict_demo(cnn, imgs):
 
 
 if __name__ == '__main__':
-    model_save_path = "saved_models/cnn.h5"
+    model_save_path = "saved_models/cnn/my_cnn.h5"
     train(model_save_path)

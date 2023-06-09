@@ -4,9 +4,8 @@ strs = ['━', '█']
 def Progressbar(contents, str="progress"):
     contents = list(contents)  # 加入list()可以处理zip对象
     length = len(contents)
-    epoch = length - 1
     for index, content in enumerate(contents):
-        percentage = int(index / epoch * 100)
+        percentage = int((index + 1) / length * 100)
         str1 = '━' * (percentage // 2)
         str2 = ' ' * (50 - percentage // 2)
         print("\r", end="")
