@@ -5,7 +5,8 @@ from matplotlib import pyplot as plt
 from sklearn.model_selection import train_test_split
 from utils.Progressbar import Progressbar
 
-def LoadData_for_predict(images_path,image_size,num=None):
+
+def LoadData_for_predict(images_path, image_size, num=None):
     # 遍历图像文件夹
     image_files = sorted(os.listdir(images_path))[0:num]  # os.listdir:获取图像名称列表
     data = []
@@ -19,6 +20,8 @@ def LoadData_for_predict(images_path,image_size,num=None):
         # 将图像和标签添加到数据列表
         data.append(image)
     return np.array(data)
+
+
 def LoadData(images_path, annotations_path, image_size, num=1000, validation_split=0.3):
     # 遍历图像文件夹
     image_files = sorted(os.listdir(images_path))[0:num]  # os.listdir:获取图像名称列表
@@ -35,11 +38,13 @@ def LoadData(images_path, annotations_path, image_size, num=1000, validation_spl
         # 图像预处理
         image = cv2.resize(image, image_size).astype(np.uint8)
         annotation = cv2.resize(annotation, image_size).astype(np.uint8)
+        # print("annotation:", annotation.shape, annotation.dtype)
 
         # 将图像和标签添加到数据列表
         data.append((image, annotation))
 
-    X_train, X_test, y_train, y_test = split_dataset(data, test_size=validation_split) # random_state=42
+    X_train, X_test, y_train, y_test = split_dataset(data, test_size=validation_split)  # random_state=42
+    # print("annotation:", y_train.shape, y_train.dtype)
 
     return X_train, X_test, y_train, y_test
 
@@ -48,9 +53,10 @@ def split_dataset(data, test_size=0.2, random_state=42):
     # 拆分数据集为训练集和测试集
     images = np.array([item[0] for item in data])
     annotations = np.array([item[1] for item in data])
-
+    # print("annotation:", annotations.shape, annotations.dtype)
     # 标签需要转换为二进制形式，便于使用交叉熵损失函数
-    annotations = np.where(annotations > 0, 1, 0)
+    annotations = np.where(annotations > 0, 1, 0).astype(np.uint8)
+    # print("annotation:", annotations.shape, annotations.dtype)
 
     # 划分数据集
     X_train, X_test, y_train, y_test = train_test_split(images, annotations, test_size=test_size,

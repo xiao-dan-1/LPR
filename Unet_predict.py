@@ -1,3 +1,5 @@
+import os.path
+
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from utils.LoadDatasets import *
@@ -39,17 +41,16 @@ def lp_correction(imgs, imgs_mask):
 
 if __name__ == '__main__':
     # 基本参数
-    model_path = "saved_models/unet/gunet.h5"
-    data_path = "datasets/label-studio" #"../CCPD/my_use",
+    model_path = "saved_models/unet/65-gunet.h5"
+    data_path = "../CCPD/my_use"  # ,"datasets/label-studio"
     image_folder = 'Images'
     images_path = os.path.join(data_path, image_folder)
-    save_model_path = "saved_models/unet/gunet.h5"
     input_shape = (512, 512, 3)
     image_size = (512, 512)
     validation_split = 0.2
 
     # 加载数据集
-    datas = LoadData_for_predict(images_path,image_size,50)
+    datas = LoadData_for_predict(images_path, image_size, 50)
     print(datas.shape, datas.dtype)
 
     # 加载模型
@@ -65,17 +66,26 @@ if __name__ == '__main__':
     # 显示
     i = 0
     for image, mask, cor_lp, cor_mask in Progressbar(zip(datas, masks, cor_lps, cor_masks)):
+        if np.max(mask)==0: print("kong")
         i += 1
         mask = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
-        save_path = "datasets/CCPD/new_lps"
+        save_path = "result/unet_predict"
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
         lp_mask = cv2.cvtColor(cor_mask, cv2.COLOR_GRAY2BGR)
-        plt.subplot(2, 1, 1)
-        plt.axis("off")  # 取消坐标轴
-        plt.title("car")
-        plt.imshow(np.concatenate((image, mask * 255), axis=1))
-        plt.subplot(2, 1, 2)
-        plt.axis("off")  # 取消坐标轴
-        plt.title("mask")
-        plt.imshow(np.concatenate((cor_lp, lp_mask), axis=1)[:, :, [2, 1, 0]])
-        plt.savefig(f"result/unet_predict/{i}.jpg")
-        plt.show()
+        # print("cor_lp:", cor_lp.shape, cor_lp.dtype)
+        # print("lp_mask:", lp_mask.shape, lp_mask.dtype)
+        try:
+            plt.subplot(2, 1, 1)
+            plt.axis("off")  # 取消坐标轴
+            plt.title("car")
+            plt.imshow(np.concatenate((image, mask * 255), axis=1))
+            plt.subplot(2, 1, 2)
+            plt.axis("off")  # 取消坐标轴
+            plt.title("mask")
+            plt.imshow(np.concatenate((cor_lp, lp_mask), axis=1)[:, :, [2, 1, 0]])
+            plt.savefig(f"{save_path}/{i}.jpg")
+            plt.show()
+        except:
+            plt.savefig(f"{save_path}/{i}.jpg")
+            print('显示失败')

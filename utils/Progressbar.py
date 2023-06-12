@@ -1,10 +1,12 @@
+from copy import deepcopy
+
 strs = ['━', '█']
 
 
 def Progressbar(contents, str="progress"):
-    contents = list(contents)  # 加入list()可以处理zip对象
-    length = len(contents)
-    for index, content in enumerate(contents):
+    origal = deepcopy(contents) if isinstance(contents, zip) else contents
+    length = len(list(contents))  # 加入list()可以处理zip对象
+    for index, content in enumerate(origal):
         percentage = int((index + 1) / length * 100)
         str1 = '━' * (percentage // 2)
         str2 = ' ' * (50 - percentage // 2)

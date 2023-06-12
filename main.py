@@ -87,7 +87,7 @@ def find_lp(arrays):
         #     print()
 
 
-template = np.load(file="template.npy")
+template = np.load(file="templates.npy")
 
 if __name__ == "__main__":
     # 加载数据

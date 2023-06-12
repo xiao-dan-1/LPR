@@ -1,0 +1,91 @@
+Epoch 1, Loss: 0.05188561975955963, Accuracy: 98.29464721679688, Val Loss: 0.007350320462137461, Val Accuracy: 99.68124389648438
+Epoch 2, Loss: 0.007485494948923588, Accuracy: 99.79148864746094, Val Loss: 0.0024156374856829643, Val Accuracy: 99.81131744384766
+Epoch 3, Loss: 0.0038187068421393633, Accuracy: 99.82445526123047, Val Loss: 0.0020522705744951963, Val Accuracy: 99.76625061035156
+Epoch 4, Loss: 0.002927492605522275, Accuracy: 99.8417739868164, Val Loss: 0.0023531969636678696, Val Accuracy: 99.74314880371094
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 5, Loss: 0.0029662474989891052, Accuracy: 99.84668731689453, Val Loss: 0.0013033238938078284, Val Accuracy: 99.85063934326172
+saved saved_models/unet\5-gunet.h5 model
+Epoch 6, Loss: 0.0025891445111483335, Accuracy: 99.8557357788086, Val Loss: 0.0013479023473337293, Val Accuracy: 99.8494644165039
+Epoch 7, Loss: 0.0022077003959566355, Accuracy: 99.86832427978516, Val Loss: 0.001475886325351894, Val Accuracy: 99.78607940673828
+Epoch 8, Loss: 0.002001038985326886, Accuracy: 99.87828063964844, Val Loss: 0.0012146580265834928, Val Accuracy: 99.86092376708984
+Epoch 9, Loss: 0.0020268571097403765, Accuracy: 99.8721694946289, Val Loss: 0.0015205797972157598, Val Accuracy: 99.8477783203125
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 10, Loss: 0.001919129746966064, Accuracy: 99.87338256835938, Val Loss: 0.0009697129717096686, Val Accuracy: 99.87774658203125
+saved saved_models/unet\10-gunet.h5 model
+Epoch 11, Loss: 0.0017482328694313765, Accuracy: 99.88896179199219, Val Loss: 0.01446484960615635, Val Accuracy: 98.24344635009766
+Epoch 12, Loss: 0.0019519409397616982, Accuracy: 99.87960052490234, Val Loss: 0.0011094595538452268, Val Accuracy: 99.8545913696289
+Epoch 13, Loss: 0.0017653603572398424, Accuracy: 99.88347625732422, Val Loss: 0.0015696051996201277, Val Accuracy: 99.78926086425781
+Epoch 14, Loss: 0.001665076706558466, Accuracy: 99.88835906982422, Val Loss: 0.0008142264559864998, Val Accuracy: 99.8999252319336
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 15, Loss: 0.0016201105900108814, Accuracy: 99.88765716552734, Val Loss: 0.0015324386768043041, Val Accuracy: 99.7564697265625
+saved saved_models/unet\15-gunet.h5 model
+Epoch 16, Loss: 0.0015609548427164555, Accuracy: 99.89190673828125, Val Loss: 0.0007810618262737989, Val Accuracy: 99.89363861083984
+Epoch 17, Loss: 0.0015798272797837853, Accuracy: 99.89183044433594, Val Loss: 0.0011822214582934976, Val Accuracy: 99.83678436279297
+Epoch 18, Loss: 0.0015281799715012312, Accuracy: 99.89192962646484, Val Loss: 0.0015561387408524752, Val Accuracy: 99.7877197265625
+Epoch 19, Loss: 0.0015792943304404616, Accuracy: 99.88716125488281, Val Loss: 0.0007913370500318706, Val Accuracy: 99.88752746582031
+Epoch 20, Loss: 0.0014049727469682693, Accuracy: 99.89653015136719, Val Loss: 0.0006625581299886107, Val Accuracy: 99.90876007080078
+saved saved_models/unet\20-gunet.h5 model
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 21, Loss: 0.0013542256783694029, Accuracy: 99.89947509765625, Val Loss: 0.002075284020975232, Val Accuracy: 99.72171020507812
+Epoch 22, Loss: 0.001408485579304397, Accuracy: 99.89656829833984, Val Loss: 0.0006984063657000661, Val Accuracy: 99.89881134033203
+Epoch 23, Loss: 0.0012899137800559402, Accuracy: 99.90339660644531, Val Loss: 0.0006511351093649864, Val Accuracy: 99.90585327148438
+Epoch 24, Loss: 0.0012420164421200752, Accuracy: 99.90632629394531, Val Loss: 0.0010939218336716294, Val Accuracy: 99.82423400878906
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 25, Loss: 0.0012218770571053028, Accuracy: 99.907958984375, Val Loss: 0.0006020140717737377, Val Accuracy: 99.91133117675781
+saved saved_models/unet\25-gunet.h5 model
+Epoch 26, Loss: 0.0015150117687880993, Accuracy: 99.89149475097656, Val Loss: 0.004282060079276562, Val Accuracy: 99.45403289794922
+Epoch 27, Loss: 0.0013253961224108934, Accuracy: 99.89968872070312, Val Loss: 0.0007608399027958512, Val Accuracy: 99.89198303222656
+Epoch 28, Loss: 0.001286676386371255, Accuracy: 99.90312957763672, Val Loss: 0.0010210579494014382, Val Accuracy: 99.8542251586914
+Epoch 29, Loss: 0.0013626747531816363, Accuracy: 99.89673614501953, Val Loss: 0.0011257380247116089, Val Accuracy: 99.83944702148438
+Epoch 30, Loss: 0.0012960032327100635, Accuracy: 99.90155792236328, Val Loss: 0.0007371312822215259, Val Accuracy: 99.89083099365234
+saved saved_models/unet\30-gunet.h5 model
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 31, Loss: 0.0013039805926382542, Accuracy: 99.90267944335938, Val Loss: 0.0018872645450755954, Val Accuracy: 99.71632385253906
+Epoch 32, Loss: 0.0012749374145641923, Accuracy: 99.90296936035156, Val Loss: 0.0006709297886118293, Val Accuracy: 99.90264892578125
+Epoch 33, Loss: 0.0012449560454115272, Accuracy: 99.90573120117188, Val Loss: 0.0007112789317034185, Val Accuracy: 99.89464569091797
+Epoch 34, Loss: 0.0015877558616921306, Accuracy: 99.88304901123047, Val Loss: 0.002309332834556699, Val Accuracy: 99.69029998779297
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 35, Loss: 0.0012941131135448813, Accuracy: 99.90282440185547, Val Loss: 0.0006797686219215393, Val Accuracy: 99.90193939208984
+saved saved_models/unet\35-gunet.h5 model
+Epoch 36, Loss: 0.0012573859421536326, Accuracy: 99.905029296875, Val Loss: 0.001017090049572289, Val Accuracy: 99.85399627685547
+Epoch 37, Loss: 0.001255679875612259, Accuracy: 99.90511322021484, Val Loss: 0.0008920863037928939, Val Accuracy: 99.86031341552734
+Epoch 38, Loss: 0.0012486918130889535, Accuracy: 99.9058837890625, Val Loss: 0.0009082375327125192, Val Accuracy: 99.8685302734375
+Epoch 39, Loss: 0.0013509129639714956, Accuracy: 99.89957427978516, Val Loss: 0.0015423322329297662, Val Accuracy: 99.78913879394531
+Epoch 40, Loss: 0.0012101803440600634, Accuracy: 99.90968322753906, Val Loss: 0.0005919032264500856, Val Accuracy: 99.91486358642578
+saved saved_models/unet\40-gunet.h5 model
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 41, Loss: 0.0012948033399879932, Accuracy: 99.90280151367188, Val Loss: 0.0017056301003322005, Val Accuracy: 99.77571105957031
+Epoch 42, Loss: 0.001211336231790483, Accuracy: 99.90841674804688, Val Loss: 0.0007377094007097185, Val Accuracy: 99.88973236083984
+Epoch 43, Loss: 0.0011831395095214248, Accuracy: 99.91097259521484, Val Loss: 0.00067328498698771, Val Accuracy: 99.89220428466797
+Epoch 44, Loss: 0.0012572059640660882, Accuracy: 99.90565490722656, Val Loss: 0.00093929871218279, Val Accuracy: 99.86804962158203
+Epoch 45, Loss: 0.0012112827971577644, Accuracy: 99.90886688232422, Val Loss: 0.0020149829797446728, Val Accuracy: 99.70195007324219
+saved saved_models/unet\45-gunet.h5 model
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 46, Loss: 0.0011999657144770026, Accuracy: 99.90907287597656, Val Loss: 0.000726730446331203, Val Accuracy: 99.89370727539062
+Epoch 47, Loss: 0.0013369126245379448, Accuracy: 99.89952087402344, Val Loss: 0.0006806824239902198, Val Accuracy: 99.9061279296875
+Epoch 48, Loss: 0.001306592603214085, Accuracy: 99.90287780761719, Val Loss: 0.0021276501938700676, Val Accuracy: 99.73898315429688
+Epoch 49, Loss: 0.0012284878175705671, Accuracy: 99.90791320800781, Val Loss: 0.0007899733609519899, Val Accuracy: 99.88023376464844
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 50, Loss: 0.0011810117866843939, Accuracy: 99.9111328125, Val Loss: 0.0006399695412255824, Val Accuracy: 99.90921020507812
+saved saved_models/unet\50-gunet.h5 model
+Epoch 51, Loss: 0.0011796688195317984, Accuracy: 99.91148376464844, Val Loss: 0.010472065769135952, Val Accuracy: 99.29214477539062
+Epoch 52, Loss: 0.0012273163301870227, Accuracy: 99.9073257446289, Val Loss: 0.000696919159963727, Val Accuracy: 99.89795684814453
+Epoch 53, Loss: 0.0012011210201308131, Accuracy: 99.90914154052734, Val Loss: 0.0009523028857074678, Val Accuracy: 99.84571075439453
+Epoch 54, Loss: 0.0011887127766385674, Accuracy: 99.91036987304688, Val Loss: 0.000613272306509316, Val Accuracy: 99.91578674316406
+Epoch 55, Loss: 0.001193346339277923, Accuracy: 99.90943908691406, Val Loss: 0.0006846109754405916, Val Accuracy: 99.90140533447266
+saved saved_models/unet\55-gunet.h5 model
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 56, Loss: 0.0011754267616197467, Accuracy: 99.9112319946289, Val Loss: 0.0010797063587233424, Val Accuracy: 99.86466979980469
+Epoch 57, Loss: 0.0014183727325871587, Accuracy: 99.89676666259766, Val Loss: 0.0010995904449373484, Val Accuracy: 99.8392562866211
+Epoch 58, Loss: 0.001149980234913528, Accuracy: 99.9134750366211, Val Loss: 0.0007931250729598105, Val Accuracy: 99.89231872558594
+Epoch 59, Loss: 0.0011668987572193146, Accuracy: 99.91118621826172, Val Loss: 0.000648320943582803, Val Accuracy: 99.91072845458984
+Epoch 60, Loss: 0.0011415729532018304, Accuracy: 99.91351318359375, Val Loss: 0.0006639044149778783, Val Accuracy: 99.90620422363281
+saved saved_models/unet\60-gunet.h5 model
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 61, Loss: 0.001194301643408835, Accuracy: 99.90880584716797, Val Loss: 0.0005949507467448711, Val Accuracy: 99.91450500488281
+Epoch 62, Loss: 0.0011602864833548665, Accuracy: 99.9117660522461, Val Loss: 0.0006788972532376647, Val Accuracy: 99.89752197265625
+Epoch 63, Loss: 0.0011454640189185739, Accuracy: 99.91300201416016, Val Loss: 0.0007573150214739144, Val Accuracy: 99.88135528564453
+Epoch 64, Loss: 0.0013762871967628598, Accuracy: 99.89949798583984, Val Loss: 0.0009777526138350368, Val Accuracy: 99.8531494140625
+WARNING:tensorflow:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+Epoch 65, Loss: 0.0011674194829538465, Accuracy: 99.91067504882812, Val Loss: 0.0005496842786669731, Val Accuracy: 99.91923522949219
+saved saved_models/unet\65-gunet.h5 model

@@ -30,3 +30,12 @@
 2023-06-09 20:52:49,249 root:INFO - |   Accuracy:0.9992     |   Precision:0.9019    |    Recall:0.9462       |   F1 Score:0.9235     |    Mean IoU:0.8580     |   ROC AUC:0.9729      |
 2023-06-09 20:53:42,230 root:INFO - |   Accuracy:0.9992     |   Precision:0.9019    |    Recall:0.9462       |   F1 Score:0.9235     |    Mean IoU:0.8580     |   ROC AUC:0.9729      |
 2023-06-09 20:59:07,088 root:INFO - |   Accuracy:0.9992     |   Precision:0.8951    |    Recall:0.9490       |   F1 Score:0.9213     |    Mean IoU:0.8540     |   ROC AUC:0.9742      |
+2023-06-10 12:39:40,107 root:INFO - |   Accuracy:0.9992     |   Precision:0.8951    |    Recall:0.9490       |   F1 Score:0.9213     |    Mean IoU:0.8540     |   ROC AUC:0.9742      |
+2023-06-10 12:42:17,307 root:INFO - |   Accuracy:0.9992     |   Precision:0.9225    |    Recall:0.9373       |   F1 Score:0.9298     |    Mean IoU:0.8689     |   ROC AUC:0.9684      |
+2023-06-10 12:44:25,846 root:INFO - |   Accuracy:0.9989     |   Precision:0.8948    |    Recall:0.9160       |   F1 Score:0.9053     |    Mean IoU:0.8269     |   ROC AUC:0.9577      |
+2023-06-10 12:47:20,579 root:INFO - |   Accuracy:0.9992     |   Precision:0.9225    |    Recall:0.9373       |   F1 Score:0.9298     |    Mean IoU:0.8689     |   ROC AUC:0.9684      |
+2023-06-10 12:49:49,761 root:INFO - |   Accuracy:0.9989     |   Precision:0.8948    |    Recall:0.9160       |   F1 Score:0.9053     |    Mean IoU:0.8269     |   ROC AUC:0.9577      |
+2023-06-11 09:39:59,796 root:INFO - |   Accuracy:0.9995     |   Precision:0.9606    |    Recall:0.9592       |   F1 Score:0.9599     |    Mean IoU:0.9229     |   ROC AUC:0.9795      |
+2023-06-11 10:13:15,811 root:INFO - |   Accuracy:0.9995     |   Precision:0.9724    |    Recall:0.9429       |   F1 Score:0.9574     |    Mean IoU:0.9183     |   ROC AUC:0.9714      |
+2023-06-11 10:16:22,567 root:INFO - |   Accuracy:0.9992     |   Precision:0.9048    |    Recall:0.9692       |   F1 Score:0.9359     |    Mean IoU:0.8795     |   ROC AUC:0.9843      |
+2023-06-11 17:18:57,719 root:INFO - |   Accuracy:0.9994     |   Precision:0.9448    |    Recall:0.9476       |   F1 Score:0.9462     |    Mean IoU:0.8979     |   ROC AUC:0.9736      |

@@ -108,12 +108,11 @@ if __name__ == '__main__':
     mask_folder = 'Mask'
     images_path = os.path.join(data_path, image_folder)
     annotations_path = os.path.join(data_path, mask_folder)
-    model_path = "saved_models/unet/best.h5"
+    model_path = "saved_models/unet/65-gunet.h5"
     image_size = (512, 512)
-    validation_split = 0.2
 
     # 加载数据集
-    _, X_test, _, y_test = LoadData(images_path, annotations_path, image_size, num=100, validation_split=0.9)
+    _, X_test, _, y_test = LoadData(images_path, annotations_path, image_size, num=400, validation_split=0.9)
     print(X_test.shape)
     # 加载模型
     model = tf.keras.models.load_model(model_path, compile=False)

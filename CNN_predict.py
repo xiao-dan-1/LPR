@@ -12,6 +12,7 @@ characters = ["京", "沪", "津", "渝", "冀", "晋", "蒙", "辽", "吉", "�
 
 
 def cnn_predict(cnn, imgs):
+    print(imgs.shape)
     preds = cnn.predict(imgs)  # 预测形状应为(1,80,240,3)
     # print(preds)
     # lps = [[np.argmax(pre) for pre in pred] for pred in preds]
@@ -86,8 +87,8 @@ def get_lp(imgs, masks):
             img_rots.append(img_rot)
             mask_rots.append(mask_rot)
             # Areas = cv2.contourArea(cont)
-            # template = "Areas\t{}\tw_h\t{:.4f}\tAreas_w\t{:.4f}\tAreas_h\t{:.4f}\tsize\t{}"
-            # result  = template.format(Areas,  size[0] / size[1], Areas / size[0], Areas / size[1],size)
+            # templates = "Areas\t{}\tw_h\t{:.4f}\tAreas_w\t{:.4f}\tAreas_h\t{:.4f}\tsize\t{}"
+            # result  = templates.format(Areas,  size[0] / size[1], Areas / size[0], Areas / size[1],size)
             # print(result)
         lps.append(img_rots)
         labels.append(mask_rots)
@@ -98,7 +99,7 @@ def result_show(imgs, pres, probabilitys, save_path=None):
     show_num = 30
     for img, pre, probability in zip(imgs, pres, probabilitys):
         print(f"pre:{pre}\tacc:{probability}")
-        acc_num = np.sum(probability > 0.8)
+        acc_num = np.sum(probability > 0.9)
         if acc_num < 5:
             print("不是车牌！！！")
             continue
@@ -124,7 +125,7 @@ if __name__ == '__main__':
     datasets_path = "datasets/CBLPRD"
     _, data_images, _, test_labels = LoadData(datasets_path, 0.5, 10)
     # 加载模型
-    model_path = "saved_models/cnn/my_cnn.h5"
+    model_path = "saved_models/cnn/best_48_from_goodlps.h5"
     model = tf.keras.models.load_model(model_path)
     pres, probabilitys = cnn_predict(model, data_images)
     print(pres)

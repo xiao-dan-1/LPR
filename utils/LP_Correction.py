@@ -78,19 +78,25 @@ def get_lp(imgs, masks):
             mask = mask * 255
         mask = cv2.medianBlur(mask, 5)
         # 开运算
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (20, 5))
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel=kernel)
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (50, 2))
+        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel=kernel)
         # 将图片二值化
         _, binary = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
         # 在二值图上寻找轮廓
         contours, _ = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         if not contours:
+            cor_lps.append(np.zeros([32, 148, 3], dtype=np.uint8))
+            cor_masks.append(np.zeros([32, 148], dtype=np.uint8))
             continue
         # print(contours)
         Area = [cv2.contourArea(cont) for cont in contours]
+        if np.max(Area) < 800:
+            cor_lps.append(np.zeros([32, 148, 3], dtype=np.uint8))
+            cor_masks.append(np.zeros([32, 148], dtype=np.uint8))
+            continue
         # print("Area:",Area)
         maxArea_index = np.argmax(np.array([cv2.contourArea(cont) for cont in contours]))
-        # print(maxArea_index)
+        # print(Area[maxArea_index])
         # 考虑图像中只有一张车牌，选取面积最大的作为车牌
         contours = [contours[maxArea_index]]
         # 利用最小外接矩阵获取车牌
@@ -115,7 +121,12 @@ def get_lp(imgs, masks):
             M = cv2.getRotationMatrix2D(center, angle, scale=1)  # （center,angle,scale）计算旋转矩阵
             img_rot = cv2.warpAffine(img.copy(), M, (img.shape[0], img.shape[1]))  # 仿射变换
             mask_rot = cv2.warpAffine(mask.copy(), M, (img.shape[0], img.shape[1]))  # 仿射变换
-            size = sorted(list(map(int, size)), reverse=True)
+
+            def map_func(x):
+                x = int(x) + 8
+                return x
+
+            size = sorted(list(map(map_func, size)), reverse=True)
             img_rot = cv2.getRectSubPix(img_rot, size, center)  # 获取矩形
             mask_rot = cv2.getRectSubPix(mask_rot, size, center)  # 获取矩形
             # cv_show(img_rot)
@@ -123,8 +134,8 @@ def get_lp(imgs, masks):
             cor_lps.append(img_rot)
             cor_masks.append(mask_rot)
             # Areas = cv2.contourArea(cont)
-            # template = "Areas\t{}\tw_h\t{:.4f}\tAreas_w\t{:.4f}\tAreas_h\t{:.4f}\tsize\t{}"
-            # result  = template.format(Areas,  size[0] / size[1], Areas / size[0], Areas / size[1],size)
+            # templates = "Areas\t{}\tw_h\t{:.4f}\tAreas_w\t{:.4f}\tAreas_h\t{:.4f}\tsize\t{}"
+            # result  = templates.format(Areas,  size[0] / size[1], Areas / size[0], Areas / size[1],size)
             # print(result)
         # cor_lps.append(img_rots)
         # cor_masks.append(mask_rots)
