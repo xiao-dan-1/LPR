@@ -22,10 +22,10 @@ def LoadData_for_predict(images_path, image_size, num=None):
     return np.array(data)
 
 
-def LoadData(images_path, annotations_path, image_size, num=1000, validation_split=0.3):
+def LoadData(images_path, annotations_path, image_size, start_num=0, num=1000, validation_split=0.3):
     # 遍历图像文件夹
-    image_files = sorted(os.listdir(images_path))[0:num]  # os.listdir:获取图像名称列表
-    annotation_files = sorted(os.listdir(annotations_path))[0:num]  # 排序确保图像文件和标签文件的对应关系是正确
+    image_files = sorted(os.listdir(images_path))[start_num:num]  # os.listdir:获取图像名称列表
+    annotation_files = sorted(os.listdir(annotations_path))[start_num:num]  # 排序确保图像文件和标签文件的对应关系是正确
     data = []
     for img_file, ann_file in Progressbar(zip(image_files, annotation_files), str="加载数据集"):
         img_path = os.path.join(images_path, img_file)

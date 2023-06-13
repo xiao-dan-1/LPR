@@ -39,3 +39,5 @@
 2023-06-11 10:13:15,811 root:INFO - |   Accuracy:0.9995     |   Precision:0.9724    |    Recall:0.9429       |   F1 Score:0.9574     |    Mean IoU:0.9183     |   ROC AUC:0.9714      |
 2023-06-11 10:16:22,567 root:INFO - |   Accuracy:0.9992     |   Precision:0.9048    |    Recall:0.9692       |   F1 Score:0.9359     |    Mean IoU:0.8795     |   ROC AUC:0.9843      |
 2023-06-11 17:18:57,719 root:INFO - |   Accuracy:0.9994     |   Precision:0.9448    |    Recall:0.9476       |   F1 Score:0.9462     |    Mean IoU:0.8979     |   ROC AUC:0.9736      |
+2023-06-13 16:42:39,488 root:INFO - |   Accuracy:0.9978     |   Precision:0.8812    |    Recall:0.7245       |   F1 Score:0.7952     |    Mean IoU:0.6600     |   ROC AUC:0.8620      |
+2023-06-13 16:59:39,445 root:INFO - |   Accuracy:0.9994     |   Precision:0.9448    |    Recall:0.9476       |   F1 Score:0.9462     |    Mean IoU:0.8979     |   ROC AUC:0.9736      |

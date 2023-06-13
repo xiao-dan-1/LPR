@@ -1,7 +1,11 @@
 import os
 import re
-import cv2
+import sys
 
+dir_mytest = "D:\Desktop\license plate recognition\My_LPR"
+sys.path.insert(0, dir_mytest)
+
+import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -103,7 +107,7 @@ def get_train_path():
     return files_path
 
 
-def CCPD2Mask(save_path=os.path.join(ccpd_path, "Mask")):
+def CCPD2MaskDatasets(save_path=os.path.join(ccpd_path, "Mask")):
     files_path = get_train_path()
     show_num = 5
     for file_path in Progressbar(files_path[0:10]):
@@ -120,7 +124,7 @@ def CCPD2Mask(save_path=os.path.join(ccpd_path, "Mask")):
             plt.show()
 
 
-def CCPD2LP(num=None, save_lp_path=os.path.join(ccpd_path, "lp")):
+def CCPD2LPDatasets(num=None, save_lp_path=os.path.join(ccpd_path, "lp")):
     files_path = get_train_path()
     show_num = 5
     for file_path in Progressbar(files_path[0:num], str="CCPD2LP"):
@@ -147,9 +151,9 @@ if __name__ == '__main__':
     save_lp_path = "D:\Desktop\license plate recognition\CCPD\CCPD2019\lp"
 
     # # 基本信息Demo
-    # ccpd = CCPD(path)
-    # print(ccpd.Scale, ccpd.H_Angle, ccpd.V_Angle, ccpd.RB, ccpd.LB, ccpd.LT, ccpd.RT, ccpd.LP)
-    # print(ccpd.getLP())
+    ccpd = CCPD(path)
+    print(ccpd.Scale, ccpd.H_Angle, ccpd.V_Angle, ccpd.RB, ccpd.LB, ccpd.LT, ccpd.RT, ccpd.LP)
+    print(ccpd.getLP())
 
     # # CCPD 转 MASK Demo
     # ccpd = CCPD(path)
@@ -158,12 +162,12 @@ if __name__ == '__main__':
     # Mask = ccpd.CCPD_to_Mask(save_path)
     # print("Mask:", Mask.shape, Mask.dtype)
 
-    # CCPD 转 车牌数据 Demo
-    ccpd = CCPD(path)
-    lp = ccpd.CCPD_to_LPdataset(save_lp_path)
-    cv2.imshow('lp', lp)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
+    # # CCPD 转 车牌数据 Demo
+    # ccpd = CCPD(path)
+    # lp = ccpd.CCPD_to_LPdataset(save_lp_path)
+    # cv2.imshow('lp', lp)
+    # cv2.waitKey()
+    # cv2.destroyAllWindows()
 
     # cv2.imshow('img', np.concatenate((img, Mask), axis=1))
     # cv2.waitKey()

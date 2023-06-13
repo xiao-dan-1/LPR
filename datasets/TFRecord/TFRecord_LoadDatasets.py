@@ -1,10 +1,11 @@
 import os, sys
 
+dir_mytest = "D:\Desktop\license plate recognition\My_LPR"
+sys.path.insert(0, dir_mytest)
 import matplotlib.pyplot as plt
 
-dir_mytest = "/"
-sys.path.insert(0, dir_mytest)
 from utils.LoadDatasets import LoadData
+from utils.Data_augment import *
 import tensorflow as tf
 from utils.Progressbar import Progressbar
 
@@ -68,23 +69,43 @@ if __name__ == '__main__':
     validation_split = 0.2
     batch_size = 4
 
-    # # 加载数据集
-    # X_train, X_test, y_train, y_test = LoadData(images_path, annotations_path, image_size,
-    #                                             validation_split=validation_split, num=5000)
+    # for i in range(2):
+    #     # # 加载数据集
+    #     once_num = 3000
+    #     X_train, X_test, y_train, y_test = LoadData(images_path, annotations_path, image_size,
+    #                                                 validation_split=validation_split, start_num=once_num * i,
+    #                                                 num=once_num * (i + 1))
     #
-    # save_tfrecords(X_train, y_train, "train.tfrecords")
-    # save_tfrecords(X_test, y_test, "test.tfrecords")
+    #     X_train_augmented, y_train_augmented = data_augment(X_train, y_train, image_size)
+    #     show_augmented_result_demo(X_train, y_train, X_train_augmented, y_train_augmented)
+    #     #
+    #     save_tfrecords(X_train_augmented, y_train_augmented, f"train{i}.tfrecords")
+    #     save_tfrecords(X_test, y_test, f"test{i}.tfrecords")
+    #
+    #     train_sets_batch = load_dataset(f"train{i}.tfrecords")
+    #
+    #     for train_sets in Progressbar(train_sets_batch):
+    #         images, labels = train_sets
+    #         # print(images.shape, images.dtype)
+    #         # print(labels.shape, labels.dtype)
+    #         for image, label in zip(images, labels):
+    #             plt.subplot(1, 2, 1)
+    #             plt.imshow(image)
+    #             plt.subplot(1, 2, 2)
+    #             plt.imshow(label)
+    #             plt.show()
+    #         break  # 显示一批结束
 
-    train_sets_batch = load_dataset("train.tfrecords")
+    train_sets_batch = load_dataset(["train0.tfrecords", "train1.tfrecords"],batch_size=16)
 
     for train_sets in Progressbar(train_sets_batch):
         images, labels = train_sets
-        # print(images.shape, images.dtype)
-        # print(labels.shape, labels.dtype)
+        print(images.shape, images.dtype)
+        print(labels.shape, labels.dtype)
         for image, label in zip(images, labels):
             plt.subplot(1, 2, 1)
             plt.imshow(image)
             plt.subplot(1, 2, 2)
             plt.imshow(label)
             plt.show()
-        break
+        break  # 显示一批结束

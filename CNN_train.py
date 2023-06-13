@@ -56,7 +56,7 @@ def show_history(history):
 def train(save_path):
     epochs = 100
     batch_size = 32
-    num = None
+    num = 1000
     image_size = (48, 128)
 
     dirname = os.path.dirname(save_path)

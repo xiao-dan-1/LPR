@@ -122,7 +122,7 @@ if __name__ == '__main__':
     # data_images, data_labels = LoadDataset_for_CNN(img_path, 500)
 
     # datasets_path = "datasets/lp"
-    datasets_path = "datasets/CBLPRD"
+    datasets_path = "../datasets/CBLPRD"
     _, data_images, _, test_labels = LoadData(datasets_path, 0.5, 10)
     # 加载模型
     model_path = "saved_models/cnn/best_48_from_goodlps.h5"

@@ -64,7 +64,7 @@ if __name__ == '__main__':
             <img src="https://huggingface.co/spaces/course-demos/Rick_and_Morty_QA/resolve/main/rick.png " width=250px style="margin: 0 auto;">""")
         with gr.Row():
             image_input = gr.Image()
-            image_output = gr.Image(interactive=False)
+            image_output = gr.Image()
         image_button = gr.Button("获取掩码")
 
         with gr.Row():

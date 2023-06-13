@@ -5,10 +5,7 @@ import numpy as np
 import tensorflow as tf
 from matplotlib import pyplot as plt
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, MaxPooling2D, Conv2DTranspose, \
-    concatenate
-
+from models.UNet import Unet
 from utils.LoadDatasets import LoadData
 import albumentations as A
 from datasets.TFRecord.TFRecord_LoadDatasets import load_dataset
@@ -27,81 +24,12 @@ if gpus:
         print(e)
 
 
-# 定义UNet模型
-def unet_model(input_shape, depth=4, filters=16, dtype=tf.float16):
-    # 输入层
-    inputs = Input(input_shape)
-
-    def conv_33_relu(Input, filters):
-        conv1 = Conv2D(filters, 3, padding='same')(Input)
-        bn1 = BatchNormalization()(conv1)
-        Output = Activation('relu', dtype=dtype)(bn1)
-        return Output
-
-    def conv_block(inputs, filters):
-        conv1 = conv_33_relu(inputs, filters)
-        conv2 = conv_33_relu(conv1, filters)
-        pool = MaxPooling2D(pool_size=(2, 2))(conv2)
-        return conv2, pool
-
-    def upconv_block(inputs, skip_features, filters):
-        upsample = Conv2DTranspose(filters, 2, strides=(2, 2), padding='same')(inputs)
-        concat = concatenate([skip_features, upsample], axis=3)
-
-        conv1 = conv_33_relu(concat, filters)
-        conv2 = conv_33_relu(conv1, filters)
-        return conv2
-
-    skip_features = []
-    x = inputs
-    # 编码器部分
-    for _ in range(depth):
-        conv, x = conv_block(x, filters)
-        skip_features.append(conv)
-        filters *= 2
-
-    x = conv_33_relu(x, filters)
-    x = conv_33_relu(x, filters)
-
-    # 解码器部分
-    filters //= 2  # //取整数
-    for i in range(depth - 1, -1, -1):
-        x = upconv_block(x, skip_features[i], filters)
-        filters //= 2
-
-    # 输出层
-    outputs = Conv2D(1, 1, activation='sigmoid')(x)
-
-    # 创建模型
-    model = Model(inputs=inputs, outputs=outputs)
-
-    return model
-
-
 # 训练模型
 # train_model(model, X_train, X_test, y_train, y_test, batch_size, num_epochs,checkpoint_path=None):
 def train_model(model, batch_size, num_epochs, checkpoint_path=None):
-    # 自定义损失函数（加权交叉熵）
-    def weighted_crossentropy_loss(y_true, y_pred):
-        # num_plates =   # 车牌样本的数量
-        # num_non_plates = np.sum(img == 0)  # 非车牌样本的数量
-        pos_weight = np.sum(y_true == 1)  # 正样本的权重
-        neg_weight = np.sum(y_true == 0)  # 负样本的权重
-
-        weight_ratio = neg_weight / (neg_weight + pos_weight)
-        pos_weight = weight_ratio * 100 * 0.5
-        neg_weight = 1
-        print(pos_weight, neg_weight)
-        y_true = tf.cast(np.expand_dims(y_true, axis=-1), tf.float16)
-        y_pred = tf.cast(y_pred, tf.float16)
-        # 计算加权交叉熵损失
-        loss = tf.nn.weighted_cross_entropy_with_logits(y_true, y_pred, pos_weight, neg_weight)
-        return tf.reduce_mean(loss)
-
     # 定义损失函数和优化器
     # loss_fn = tf.keras.losses.BinaryCrossentropy()
     loss_fn = tf.keras.losses.BinaryFocalCrossentropy()
-    # loss_fn = weighted_crossentropy_loss
     optimizer = tf.keras.optimizers.Adam()
 
     # 创建指标来跟踪训练和验证的损失和准确性
@@ -121,8 +49,8 @@ def train_model(model, batch_size, num_epochs, checkpoint_path=None):
     # val_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test)).batch(batch_size).map(preprocess_data).prefetch(
     #     1)
 
-    train_dataset = load_dataset(os.path.join("datasets/TFRecord", "train.tfrecords"), batch_size)
-    val_dataset = load_dataset(os.path.join("datasets/TFRecord", "test.tfrecords"), batch_size)
+    train_dataset = load_dataset(["datasets/TFRecord/train0.tfrecords", "datasets/TFRecord/train1.tfrecords"],batch_size)
+    val_dataset = load_dataset(["datasets/TFRecord/test0.tfrecords", "datasets/TFRecord/test1.tfrecords"], batch_size)
 
     # 训练循环
     for epoch in range(num_epochs):
@@ -383,7 +311,7 @@ if __name__ == '__main__':
     # show_augmented_result_demo(X_train, y_train, X_train_augmented, y_train_augmented)  # show_augmented_result_demo
 
     # 创建模型
-    model = unet_model(input_shape=input_shape, depth=depth, filters=filters)
+    model = Unet(input_shape=input_shape, depth=depth, filters=filters)
 
     # # 训练
     # train_model(model, X_train_augmented, X_test, y_train_augmented, y_test, batch_size, num_epochs,
