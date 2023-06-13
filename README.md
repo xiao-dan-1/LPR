@@ -1,7 +1,7 @@
 # 车牌识别系统
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
+[![License](https://img.shields.io/badge/python-3.10-blue.svg)](LICENSE)
 ## 项目描述
 
 车牌识别系统是基于深度学习技术的一个应用，旨在通过图像处理和模式识别算法实现对车牌的自动识别和提取。该系统采用了UNet网络进行车牌分割和CNN网络进行车牌识别，可以准确、高效地识别车辆上的车牌信息。
@@ -41,7 +41,7 @@
 - *_train：用于训练网络模型
 - *_eval：用于评估模型性能
 - *_predict：用于模型预测
-- *_Demo：简单的示例
+- *_demo：简单的示例
 
 ## 功能特点
 
@@ -67,7 +67,7 @@ python web_demo.py
 ![image](images/web_demo_image.jpg)
 
 ## 改进
-- 由于使用的Unet网络实现端到端的识别，所以数据集的数据量过大，训练中中只是了5000张图片训练
+- 由于使用的Unet网络实现端到端的识别，所以数据集的数据量过大，训练中只使用了5000张图片进行训练
 - CCPD数据集主要是安徽地区，存在地区分布不均匀，导致识别网络对第一个字符的效果不佳，需要使用地区分布均匀的数据集用于识别网络训练
 
 ## 致谢
