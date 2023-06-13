@@ -82,6 +82,7 @@ def get_lp(imgs, masks):
         mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel=kernel)
         # 将图片二值化
         _, binary = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
+        print(binary.shape,binary.dtype)
         # 在二值图上寻找轮廓
         contours, _ = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         if not contours:
