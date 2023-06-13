@@ -44,8 +44,8 @@ def predict(cor_lp):
     acc_num = np.sum(probability > 0.9)
     if acc_num < 5:
         string = "未识别车牌！！！"
-        pre = "未识别车牌"
-        acc = "未识别车牌"
+        pre = "pre:未识别车牌"
+        acc = "acc:0"
     else:
         string = f"pre:{pre[0]}acc:{list(probability)[0]}"
         pre = f"pre:{pre[0]}"

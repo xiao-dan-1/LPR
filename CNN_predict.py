@@ -12,7 +12,7 @@ characters = ["京", "沪", "津", "渝", "冀", "晋", "蒙", "辽", "吉", "�
 
 
 def cnn_predict(cnn, imgs):
-    print(imgs.shape)
+    # print(imgs.shape)
     preds = cnn.predict(imgs)  # 预测形状应为(1,80,240,3)
     # print(preds)
     # lps = [[np.argmax(pre) for pre in pred] for pred in preds]

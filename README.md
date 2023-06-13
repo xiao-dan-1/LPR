@@ -12,14 +12,6 @@
 2. 车牌分割：使用训练好的Unet网络对预处理过后的图像进行图像分割，将车牌从背景中提取出来。Unet网络具有强大的特征提取和语义分割能力，可以精确的定位车牌。
 3. 车牌识别：将车牌分割得到的车牌输入到CNN网络中，通过卷积层特征提取，经由全连接层连接，最终在输出层输出车牌的字符序列。
 
-## 演示
-
-暂无演示示例。
-
-## 数据集
-
-- 数据集使用的是[CCPD](https://github.com/detectRecog/CCPD)
-- 可以通过datasets/CCPD/CCPD.py中定义了CCPD数据集的属性和方法,包括生成掩码，生成车牌
 
 ## 安装
 
@@ -37,13 +29,19 @@
 
 4. 运行车牌识别系统:
     ```python
-   python LPR.py
+   python LPR_Demo.py
+
+- （测试图片可使用datasets/Test_Images,来源CCPD部分数据）
 
 ## 使用说明
 
 [如何使用，输入数据格式、调用方法、示例代码]
 
-- 数据集：使用的是CCPD
+- 数据集：使用的是[CCPD](https://github.com/detectRecog/CCPD),我在datasets/CCPD/CCPD.py中定义了CCPD数据集的属性和方法,包括生成掩码，生成车牌
+- *_train：用于训练网络模型
+- *_eval：用于评估模型性能
+- *_predict：用于模型预测
+- *_Demo：简单的示例
 
 ## 功能特点
 
@@ -53,8 +51,24 @@
 
 ## 示例
 
-暂无示例。
-待完善...
+### GUI Demo
+
+```shell
+python gui_demo.py
+```
+
+### Web Demo
+
+首先安装 Gradio：pip install gradio，然后运行仓库中的 web_demo.py：
+
+```shell
+python web_demo.py
+```
+![image](images/web_demo_image.jpg)
+
+## 改进
+- 由于使用的Unet网络实现端到端的识别，所以数据集的数据量过大，训练中中只是了5000张图片训练
+- CCPD数据集主要是安徽地区，存在地区分布不均匀，导致识别网络对第一个字符的效果不佳，需要使用地区分布均匀的数据集用于识别网络训练
 
 ## 致谢
 

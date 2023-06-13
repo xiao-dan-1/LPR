@@ -9,6 +9,8 @@ from CNN_predict import cnn_predict, result_show
 from utils.LP_Correction import *
 from utils.Progressbar import Progressbar
 
+
+
 plt.rcParams['font.sans-serif'] = ['SimHei']
 if __name__ == '__main__':
     data_path = "../CCPD/my_use"
