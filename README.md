@@ -35,7 +35,6 @@
 
 ## 使用说明
 
-[如何使用，输入数据格式、调用方法、示例代码]
 
 - 数据集：使用的是[CCPD](https://github.com/detectRecog/CCPD),我在datasets/CCPD/CCPD.py中定义了CCPD数据集的属性和方法,包括生成掩码，生成车牌
 - *_train：用于训练网络模型
